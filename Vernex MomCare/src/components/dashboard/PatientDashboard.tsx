@@ -14,6 +14,7 @@ import { StatCard } from '@/components/ui/stat-card';
 import { Progress } from '@/components/ui/progress';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/contexts/AuthContext';
+import { API_BASE } from "@/config/api";
 import {
   fetchResources,
   refreshNotifications,
@@ -205,12 +206,12 @@ export function PatientDashboard() {
       try {
         let data: any = null;
 
-        const byIdRes = await fetch(`http://localhost:4000/api/auth/patient/${user.id}`);
+        const byIdRes = await fetch(`${API_BASE}/api/auth/patient/${user.id}`);
         if (byIdRes.ok) {
           data = await byIdRes.json();
         } else if (user.email) {
           const byEmailRes = await fetch(
-            `http://localhost:4000/api/auth/patient/by-email/${encodeURIComponent(user.email)}`
+            `${API_BASE}/api/auth/patient/by-email/${encodeURIComponent(user.email)}`
           );
           if (byEmailRes.ok) {
             data = await byEmailRes.json();
@@ -238,7 +239,7 @@ export function PatientDashboard() {
   useEffect(() => {
     const loadBabyDevelopment = async () => {
       try {
-        const res = await fetch(`http://localhost:4000/api/pregnancy/development/${pregnancy.week}`);
+        const res = await fetch(`${API_BASE}/api/pregnancy/development/${pregnancy.week}`);
         const data = await res.json();
         if (res.ok && data?.success) {
           if (data.summary) setBabyDevelopmentText(data.summary);

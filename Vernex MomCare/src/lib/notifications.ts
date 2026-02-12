@@ -1,3 +1,5 @@
+import { API_BASE } from "@/config/api";
+
 export interface WeatherSummary {
   temp: number;
   condition: string;
@@ -9,7 +11,7 @@ export interface NotificationItem {
   _id: string;
   title: string;
   message: string;
-  severity: 'info' | 'warning' | 'danger';
+  severity: "info" | "warning" | "danger";
   city: string;
   createdAt: string;
   url?: string;
@@ -24,13 +26,13 @@ export interface ResourceLink {
 }
 
 export async function refreshNotifications(userId: string, city: string) {
-  const res = await fetch('http://localhost:4000/api/notifications/refresh', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  const res = await fetch(`${API_BASE}/api/notifications/refresh`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userId, city }),
   });
   const data = await res.json();
-  if (!res.ok) throw new Error(data?.error || 'Notification refresh failed');
+  if (!res.ok) throw new Error(data?.error || "Notification refresh failed");
   return data as {
     city: string;
     summary: WeatherSummary;
@@ -39,8 +41,8 @@ export async function refreshNotifications(userId: string, city: string) {
 }
 
 export async function fetchResources() {
-  const res = await fetch('http://localhost:4000/api/notifications/resources');
+  const res = await fetch(`${API_BASE}/api/notifications/resources`);
   const data = await res.json();
-  if (!res.ok) throw new Error(data?.error || 'Resources failed');
+  if (!res.ok) throw new Error(data?.error || "Resources failed");
   return data.resources as ResourceLink[];
 }

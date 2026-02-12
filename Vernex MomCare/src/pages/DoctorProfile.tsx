@@ -20,6 +20,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 
 type DoctorProfileShape = {
   _id?: string;
@@ -49,8 +50,8 @@ export default function DoctorProfile() {
       setLoading(true);
       try {
         const [doctorRes, patientsRes] = await Promise.all([
-          fetch(`http://localhost:4000/api/auth/doctor/${user.id}`),
-          fetch(`http://localhost:4000/api/auth/doctor/patients/${user.id}`),
+          fetch(`${API_BASE}/api/auth/doctor/${user.id}`),
+          fetch(`${API_BASE}/api/auth/doctor/patients/${user.id}`),
         ]);
 
         const doctorData = doctorRes.ok ? await doctorRes.json() : null;

@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { Patient } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
+import { API_BASE } from "@/config/api";
 
 interface Props {
   open: boolean;
@@ -73,7 +74,7 @@ export function PatientRegistrationDialog({
 
     try {
       const res = await fetch(
-        'http://localhost:4000/api/auth/doctor/create-patient',
+        `${API_BASE}/api/auth/doctor/create-patient`,
         {
           method: 'POST',
           headers: {

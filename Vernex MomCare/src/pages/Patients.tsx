@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 
 export default function Patients() {
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ export default function Patients() {
       if (!user?.id) return;
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:4000/api/auth/doctor/patients/${user.id}`);
+        const res = await fetch(`${API_BASE}/api/auth/doctor/patients/${user.id}`);
         const data = await res.json();
 
         if (!res.ok || !data?.success) {

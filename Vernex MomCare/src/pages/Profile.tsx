@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { User, Mail, Phone, Heart, Shield, Edit2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE } from "@/config/api";
 
 type PatientProfile = {
   _id?: string;
@@ -67,13 +68,13 @@ export default function Profile() {
 
       try {
         let data: any = null;
-        const byIdRes = await fetch(`http://localhost:4000/api/auth/patient/${user.id}`);
+        const byIdRes = await fetch(`${API_BASE}/api/auth/patient/${user.id}`);
 
         if (byIdRes.ok) {
           data = await byIdRes.json();
         } else if (user.email) {
           const byEmailRes = await fetch(
-            `http://localhost:4000/api/auth/patient/by-email/${encodeURIComponent(user.email)}`
+            `${API_BASE}/api/auth/patient/by-email/${encodeURIComponent(user.email)}`
           );
           if (byEmailRes.ok) {
             data = await byEmailRes.json();
@@ -114,7 +115,7 @@ export default function Profile() {
         }
 
         if (typeof patient.doctorId === 'string' && patient.doctorId) {
-          const res = await fetch(`http://localhost:4000/api/auth/doctor/${patient.doctorId}`);
+          const res = await fetch(`${API_BASE}/api/auth/doctor/${patient.doctorId}`);
           const data = await res.json();
           if (res.ok && data?.success && data?.doctor) {
             setDoctor(data.doctor);

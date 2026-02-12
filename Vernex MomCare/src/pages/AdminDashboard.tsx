@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { DoctorCard } from '@/components/ui/doctor-card';
 import { RegisterDoctorDialog, Doctor } from '@/components/admin/RegisterDoctorDialog';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function AdminDashboard() {
     const fetchDoctors = async () => {
       try {
         // 1️⃣ Fetch doctors
-        const res = await fetch('http://localhost:4000/api/auth/admin/doctors');
+        const res = await fetch(`${API_BASE}/api/auth/admin/doctors`);
         const data = await res.json();
 
         if (!res.ok || !data.success) {
@@ -32,7 +33,7 @@ export default function AdminDashboard() {
           data.doctors.map(async (doc: any) => {
             try {
               const patientRes = await fetch(
-                `http://localhost:4000/api/auth/doctor/patients/${doc._id}`
+                `${API_BASE}/api/auth/doctor/patients/${doc._id}`
               );
               const patientData = await patientRes.json();
 

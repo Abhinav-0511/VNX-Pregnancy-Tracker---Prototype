@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, Users, LogOut, Stethoscope } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 
 interface Doctor {
   _id: string;
@@ -33,7 +34,7 @@ export default function AdminDoctorProfile() {
 
         // 1️⃣ Fetch all doctors, find matching one
         const doctorRes = await fetch(
-          'http://localhost:4000/api/auth/admin/doctors'
+          `${API_BASE}/api/auth/admin/doctors`
         );
         const doctorData = await doctorRes.json();
 
@@ -53,7 +54,7 @@ export default function AdminDoctorProfile() {
 
         // 2️⃣ Fetch patients for this doctor
         const patientRes = await fetch(
-          `http://localhost:4000/api/auth/doctor/patients/${doctorId}`
+          `${API_BASE}/api/auth/doctor/patients/${doctorId}`
         );
         const patientData = await patientRes.json();
 

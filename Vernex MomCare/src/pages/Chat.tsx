@@ -11,6 +11,7 @@ import { createAISession, deleteAISession, fetchAIHistory, fetchAISessions, rena
 import { fetchThread, sendDoctorMessage } from '@/lib/doctorChat';
 import { Send, Bot, User, Stethoscope, Info, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { API_BASE } from "@/config/api";
 
 export default function Chat() {
   const { user } = useAuth();
@@ -160,12 +161,12 @@ export default function Chat() {
 
       try {
         let data: any = null;
-        const byIdRes = await fetch(`http://localhost:4000/api/auth/patient/${user.id}`);
+        const byIdRes = await fetch(`${API_BASE}/api/auth/patient/${user.id}`);
         if (byIdRes.ok) {
           data = await byIdRes.json();
         } else if (user.email) {
           const byEmailRes = await fetch(
-            `http://localhost:4000/api/auth/patient/by-email/${encodeURIComponent(user.email)}`
+            `${API_BASE}/api/auth/patient/by-email/${encodeURIComponent(user.email)}`
           );
           if (byEmailRes.ok) data = await byEmailRes.json();
         }

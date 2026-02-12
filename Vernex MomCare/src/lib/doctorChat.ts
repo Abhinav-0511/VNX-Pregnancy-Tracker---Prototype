@@ -1,3 +1,5 @@
+import { API_BASE } from "@/config/api";
+
 export type ConversationItem = {
   peerId: string;
   peerName: string;
@@ -16,7 +18,7 @@ export type DoctorChatMessage = {
   createdAt: string;
 };
 
-const BASE_URL = "http://localhost:4000/api/messages";
+const BASE_URL = `${API_BASE}/api/messages`;
 
 export async function fetchConversations(userId: string): Promise<ConversationItem[]> {
   const res = await fetch(`${BASE_URL}/conversations/${encodeURIComponent(userId)}`);

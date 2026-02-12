@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { UserRole } from '@/types';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 
 export default function Login() {
   const [phase, setPhase] = useState<'intro' | 'split' | 'login'>('intro');
@@ -48,7 +49,7 @@ export default function Login() {
   setIsLoading(true);
 
   try {
-    const response = await fetch('http://localhost:4000/api/auth/login', {
+    const response = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

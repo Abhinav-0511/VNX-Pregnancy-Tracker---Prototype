@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Appointment } from '@/types/appointment';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 import {
   CalendarDays,
   ChevronLeft,
@@ -66,7 +67,7 @@ export default function DoctorAppointments() {
       if (!user?.id || user.role !== 'doctor') return;
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:4000/api/appointments/doctor/${user.id}`);
+        const res = await fetch(`${API_BASE}/api/appointments/doctor/${user.id}`);
         const data = await res.json();
         if (!res.ok || !data?.success) {
           throw new Error(data?.message || 'Unable to load appointments');
@@ -92,7 +93,7 @@ export default function DoctorAppointments() {
     status: 'approved' | 'rejected' | 'completed'
   ) => {
     try {
-      const res = await fetch(`http://localhost:4000/api/appointments/${id}/status`, {
+      const res = await fetch(`${API_BASE}/api/appointments/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),

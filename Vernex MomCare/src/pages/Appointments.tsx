@@ -23,6 +23,7 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { Appointment, AppointmentStatus } from '@/types/appointment';
+import { API_BASE } from "@/config/api";
 
 type AppointmentApiShape = {
   _id?: string;
@@ -99,8 +100,8 @@ export default function Appointments() {
       setLoading(true);
       try {
         const [apptRes, patientRes] = await Promise.all([
-          fetch(`http://localhost:4000/api/appointments/patient/${user.id}`),
-          fetch(`http://localhost:4000/api/auth/patient/${user.id}`),
+          fetch(`${API_BASE}/api/appointments/patient/${user.id}`),
+          fetch(`${API_BASE}/api/auth/patient/${user.id}`),
         ]);
 
         const apptData = await apptRes.json();
@@ -117,7 +118,7 @@ export default function Appointments() {
             setForm((prev) => ({ ...prev, doctor: patient.doctorId?.name || prev.doctor }));
           } else if (typeof patient?.doctorId === 'string') {
             setDoctorId(patient.doctorId);
-            const docRes = await fetch(`http://localhost:4000/api/auth/doctor/${patient.doctorId}`);
+            const docRes = await fetch(`${API_BASE}/api/auth/doctor/${patient.doctorId}`);
             if (docRes.ok) {
               const docData = await docRes.json();
               if (docData?.success) {
@@ -176,7 +177,7 @@ export default function Appointments() {
     if (!user?.id || !form.date || !form.time) return;
     setSubmitting(true);
     try {
-      const res = await fetch('http://localhost:4000/api/appointments', {
+      const res = await fetch(`${API_BASE}/api/appointments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

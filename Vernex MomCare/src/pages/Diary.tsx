@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Calendar, Image, Smile, Edit } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 
 type Mood = 'happy' | 'calm' | 'tired' | 'sad';
 
@@ -48,7 +49,7 @@ export default function Diary() {
     setLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:4000/api/diary?userId=${user.id}&date=${date}`
+        `${API_BASE}/api/diary?userId=${user.id}&date=${date}`
       );
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}));
@@ -82,7 +83,7 @@ export default function Diary() {
     if (!user?.id) return;
     setSaving(true);
     try {
-      const res = await fetch('http://localhost:4000/api/diary/upsert', {
+      const res = await fetch(`${API_BASE}/api/diary/upsert`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -1,5 +1,7 @@
+import { API_BASE } from "@/config/api";
+
 export async function sendToAI(message: string, userId: string, sessionId: string) {
-  const res = await fetch("http://localhost:4000/api/ai/chat", {
+  const res = await fetch(`${API_BASE}/api/ai/chat`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message, userId, sessionId }),
@@ -12,7 +14,7 @@ export async function sendToAI(message: string, userId: string, sessionId: strin
 
 export async function fetchAIHistory(userId: string, sessionId: string, limit = 50) {
   const res = await fetch(
-    `http://localhost:4000/api/ai/history?userId=${encodeURIComponent(
+    `${API_BASE}/api/ai/history?userId=${encodeURIComponent(
       userId
     )}&sessionId=${encodeURIComponent(sessionId)}&limit=${limit}`
   );
@@ -28,7 +30,7 @@ export async function fetchAIHistory(userId: string, sessionId: string, limit = 
 
 export async function fetchAISessions(userId: string, limit = 50) {
   const res = await fetch(
-    `http://localhost:4000/api/ai/sessions?userId=${encodeURIComponent(
+    `${API_BASE}/api/ai/sessions?userId=${encodeURIComponent(
       userId
     )}&limit=${limit}`
   );
@@ -44,7 +46,7 @@ export async function fetchAISessions(userId: string, limit = 50) {
 }
 
 export async function createAISession(userId: string, title = "") {
-  const res = await fetch("http://localhost:4000/api/ai/sessions", {
+  const res = await fetch(`${API_BASE}/api/ai/sessions`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ userId, title }),
@@ -61,7 +63,7 @@ export async function createAISession(userId: string, title = "") {
 }
 
 export async function deleteAISession(sessionId: string) {
-  const res = await fetch(`http://localhost:4000/api/ai/sessions/${sessionId}`, {
+  const res = await fetch(`${API_BASE}/api/ai/sessions/${sessionId}`, {
     method: "DELETE",
   });
   const data = await res.json();
@@ -70,7 +72,7 @@ export async function deleteAISession(sessionId: string) {
 }
 
 export async function renameAISession(sessionId: string, title: string) {
-  const res = await fetch(`http://localhost:4000/api/ai/sessions/${sessionId}`, {
+  const res = await fetch(`${API_BASE}/api/ai/sessions/${sessionId}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ title }),

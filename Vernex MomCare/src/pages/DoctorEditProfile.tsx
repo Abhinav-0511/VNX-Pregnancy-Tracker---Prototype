@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 import {
   User,
   Mail,
@@ -57,7 +58,7 @@ export default function DoctorEditProfile() {
       if (!user?.id || user.role !== 'doctor') return;
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:4000/api/auth/doctor/${user.id}`);
+        const res = await fetch(`${API_BASE}/api/auth/doctor/${user.id}`);
         const data = await res.json();
 
         if (!res.ok || !data?.success) {
@@ -99,7 +100,7 @@ export default function DoctorEditProfile() {
     if (!doctorId) return;
     setSaving(true);
     try {
-      const res = await fetch(`http://localhost:4000/api/auth/doctor/${doctorId}`, {
+      const res = await fetch(`${API_BASE}/api/auth/doctor/${doctorId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

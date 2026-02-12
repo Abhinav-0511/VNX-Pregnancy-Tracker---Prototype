@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { User, ArrowLeft, LogOut } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 
 interface PatientItem {
   _id: string;
@@ -31,7 +32,7 @@ export default function AdminDoctorDetail() {
         setLoading(true);
 
         const res = await fetch(
-          `http://localhost:4000/api/auth/doctor/patients/${doctorId}`
+          `${API_BASE}/api/auth/doctor/patients/${doctorId}`
         );
 
         const data = await res.json();

@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 
 export interface Doctor {
   id: string;
@@ -60,7 +61,7 @@ export function RegisterDoctorDialog({
     setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:4000/api/auth/admin/create-doctor', {
+      const res = await fetch(`${API_BASE}/api/auth/admin/create-doctor`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

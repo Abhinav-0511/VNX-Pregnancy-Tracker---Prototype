@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 
 type PatientProfile = {
   _id?: string;
@@ -68,12 +69,12 @@ export default function EditProfile() {
       try {
         let data: any = null;
 
-        const byIdRes = await fetch(`http://localhost:4000/api/auth/patient/${user.id}`);
+        const byIdRes = await fetch(`${API_BASE}/api/auth/patient/${user.id}`);
         if (byIdRes.ok) {
           data = await byIdRes.json();
         } else if (user.email) {
           const byEmailRes = await fetch(
-            `http://localhost:4000/api/auth/patient/by-email/${encodeURIComponent(user.email)}`
+            `${API_BASE}/api/auth/patient/by-email/${encodeURIComponent(user.email)}`
           );
           if (byEmailRes.ok) data = await byEmailRes.json();
         }
@@ -100,7 +101,7 @@ export default function EditProfile() {
             name: p.doctorId.name,
           });
         } else if (typeof p.doctorId === 'string' && p.doctorId) {
-          const docRes = await fetch(`http://localhost:4000/api/auth/doctor/${p.doctorId}`);
+          const docRes = await fetch(`${API_BASE}/api/auth/doctor/${p.doctorId}`);
           const docData = await docRes.json();
           if (docRes.ok && docData?.success) {
             setDoctor(docData.doctor as DoctorProfile);
@@ -125,7 +126,7 @@ export default function EditProfile() {
     if (!patientId) return;
     setSaving(true);
     try {
-      const res = await fetch(`http://localhost:4000/api/auth/patient/${patientId}`, {
+      const res = await fetch(`${API_BASE}/api/auth/patient/${patientId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

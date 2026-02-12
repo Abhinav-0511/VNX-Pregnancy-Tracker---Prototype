@@ -20,6 +20,7 @@ import { PatientDetailDialog } from './PatientDetailDialog';
 import { Patient } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 import {
   fetchResources,
   refreshNotifications,
@@ -75,7 +76,7 @@ export function DoctorDashboard() {
       setLoading(true);
 
       const res = await fetch(
-        `http://localhost:4000/api/auth/doctor/patients/${user.id}`
+        `${API_BASE}/api/auth/doctor/patients/${user.id}`
       );
 
       const data = await res.json();

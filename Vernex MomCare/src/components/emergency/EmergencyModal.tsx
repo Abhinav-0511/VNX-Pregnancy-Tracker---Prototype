@@ -8,6 +8,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { API_BASE } from "@/config/api";
 
 interface Props {
   open: boolean;
@@ -47,7 +48,7 @@ export function EmergencyModal({ open, onClose }: Props) {
       if (!open || !user?.id || user.role !== 'patient') return;
       setLoading(true);
       try {
-        const patientRes = await fetch(`http://localhost:4000/api/auth/patient/${user.id}`);
+        const patientRes = await fetch(`${API_BASE}/api/auth/patient/${user.id}`);
         const patientData = patientRes.ok ? await patientRes.json() : null;
         const patient = (patientData?.success ? patientData.patient : null) as PatientShape | null;
 
@@ -59,7 +60,7 @@ export function EmergencyModal({ open, onClose }: Props) {
         if (typeof doctorRef === 'object') {
           setDoctorPhone(toTel(doctorRef.phone));
         } else if (doctorRef) {
-          const doctorRes = await fetch(`http://localhost:4000/api/auth/doctor/${doctorRef}`);
+          const doctorRes = await fetch(`${API_BASE}/api/auth/doctor/${doctorRef}`);
           const doctorData = doctorRes.ok ? await doctorRes.json() : null;
           if (doctorData?.success) {
             setDoctorPhone(toTel(doctorData.doctor?.phone));
